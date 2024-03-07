@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <meta charset="UTF-8">
+   <title>SaveStr</title>
+   <style>
+      body {
+        background-image: url("index.png");
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-attachment: scroll; /* Do not move image when scrolling */
+        background-position: center top; /* Center the image and stick it to the web page top */
+        background-size: cover; /* Resize the background image to cover the entire container */
+      }
+      
+      h1 {
+        text-align: center;
+      }
+      
+      p {
+        font-family: verdana;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      input[type=text], select {
+        width: 50%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        outline: #4CAF50 solid 10px;
+      }
+
+      #x_button{
+        float: right;
+        margin: 0.2% 0.5%;
+      }
+
+      #list_item_str{
+        float: left;
+        margin: 0 0.5%;
+        border: 1px solid #ccc;
+      }
+
+      #list_item{
+        width: 70%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        outline: #4CAF50 solid 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to this majestic localhost page!</h1>
+    <p>Quick, save your magical string before anyone notices:</p>
+    <form method="POST" align="middle">
+      <input name="str_input" type="text" align="middle">
+    </form>
+    <p>View your glorious input (note how it is still there after service was murdered and then resurrected):</p>
+    {% for str_item in str_list %}
+    <div align="middle">
+      <div id="list_item">
+        <p id="list_item_str">{{ str_item.string }}</p>
+        <form method="POST">
+          <input id="x_button" type="submit" value="X" name={{ index_to_button(str_item.index) }}>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </body>
+</html>

@@ -1,0 +1,22 @@
+# Defines multiple containers
+services:
+  # Frontend
+  app:
+    # Builds image in provided path
+    build: ./app
+    # Bind the container and the host machine to the exposed port 8000 (users connect to that port)
+    # Database communicates through port 5000
+    ports:
+      - 8000:5000
+
+  # Backend
+  database:
+    # Use existing image (basic redis)
+    image: redis:7.0
+    # Used volumes and where they should be mounted
+    volumes:
+      - db:/data
+
+# Defines volumes
+volumes:
+  db:
