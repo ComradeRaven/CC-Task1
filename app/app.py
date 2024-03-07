@@ -15,6 +15,7 @@ from flask import Flask, render_template, request, redirect, url_for
 # Classes #
 #############
 
+
 class StrListItem():
     """Holds item from database (index, value).
     """
@@ -22,6 +23,7 @@ class StrListItem():
     def __init__(self, index: int, string: str) -> None:
         self.index = index
         self.string = string
+
 
 #############
 # Variables #
