@@ -3,8 +3,6 @@
 ###########
 
 
-# System
-import sys
 # Database
 import redis
 # Flask web app
