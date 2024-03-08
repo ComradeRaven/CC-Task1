@@ -61,11 +61,11 @@ def button_to_index(name: str) -> int:
     return int(name[9:])
 
 
-def render_main_page() -> str:
+def render_main_page(redis_error='') -> str:
     """Returns main page html.
     """
     
-    return render_template('index.html', str_list=get_str_list(), index_to_button=index_to_button)
+    return render_template('home.html', str_list=get_str_list(), index_to_button=index_to_button, redis_error=redis_error)
 
 
 #######
@@ -91,15 +91,19 @@ def index():
 def home():
     # Input request
     if request.method == 'POST':
-        if 'str_input' in request.form:
-            database.lpush(str_list_key, request.form['str_input'])
-        else:
-            index = button_to_index(list(request.form.to_dict().keys())[0])
-            # Shift values, removing desired one from list
-            for i in range(index, 0, -1):
-                database.lset(str_list_key, i, database.lindex(str_list_key, i-1))
-            # Pop 0 element
-            database.lpop(str_list_key)
+        try:
+            if 'str_input' in request.form:
+                database.lpush(str_list_key, request.form['str_input'])
+            else:
+                index = button_to_index(list(request.form.to_dict().keys())[0])
+                # Shift values, removing desired one from list
+                for i in range(index, 0, -1):
+                    database.lset(str_list_key, i, database.lindex(str_list_key, i-1))
+                # Pop 0 element
+                database.lpop(str_list_key)
+        except redis.exceptions.ResponseError as err:
+            # Render home page while showing Redis error
+            return render_main_page(redis_error=f'Redis Error: {err}')
         
         # Redirect to this page to confirm POST request 
         return redirect(url_for('home'))

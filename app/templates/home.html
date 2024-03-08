@@ -5,7 +5,7 @@
    <title>SaveStr</title>
    <style>
       body {
-        background-image: url("index.png");
+        background-image: url("home.png");
         background-repeat: no-repeat; /* Do not repeat the image */
         background-attachment: scroll; /* Do not move image when scrolling */
         background-position: center top; /* Center the image and stick it to the web page top */
@@ -33,6 +33,10 @@
         outline: #4CAF50 solid 10px;
       }
 
+      #error_str{
+        color: red;
+      }
+
       #x_button{
         float: right;
         margin: 0.2% 0.5%;
@@ -41,7 +45,6 @@
       #list_item_str{
         float: left;
         margin: 0 0.5%;
-        border: 1px solid #ccc;
       }
 
       #list_item{
@@ -62,15 +65,16 @@
       <input name="str_input" type="text" align="middle">
     </form>
     <p>View your glorious input (note how it is still there after service was murdered and then resurrected):</p>
-    {% for str_item in str_list %}
+    <p id="error_str">{{ redis_error }}</p>
     <div align="middle">
+    {% for str_item in str_list %}
       <div id="list_item">
         <p id="list_item_str">{{ str_item.string }}</p>
         <form method="POST">
           <input id="x_button" type="submit" value="X" name={{ index_to_button(str_item.index) }}>
         </form>
       </div>
-    </div>
     {% endfor %}
+    </div>
   </body>
 </html>
